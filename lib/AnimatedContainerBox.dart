@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class AnimatedContainerBox extends StatefulWidget {
   final int index;
@@ -11,30 +12,47 @@ class AnimatedContainerBox extends StatefulWidget {
 
 class AnimatedContainerBoxState extends State<AnimatedContainerBox> {
   bool _isExpanded = false;
+  late Timer _timer;
 
-  void _toggleContainer() {
-    setState(() {
-      _isExpanded = !_isExpanded; // 切換狀態
+  @override
+  void initState() {
+    super.initState();
+
+    _timer = Timer.periodic(const Duration(milliseconds: 1500), (timer) {
+      setState(() {
+        _isExpanded = !_isExpanded;
+      });
     });
   }
 
   @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: _toggleContainer, // 點擊切換動畫
-      child: AnimatedContainer(
-        width: _isExpanded ? 150 : 300, // 寬度改變
-        height: _isExpanded ? 300 : 100, // 高度改變
-        color: _isExpanded ? Colors.blue : Colors.red, // 顏色改變
-        duration: const Duration(seconds: 1), // 動畫持續時間
-        curve: Curves.easeInOut, // 動畫曲線
-        child: const Center(
-          child: Text(
-            'Tap Me!',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // 獲取父容器的寬度
+        final parentWidth = constraints.maxWidth;
+
+        // 動態計算寬高
+        final width = _isExpanded ? parentWidth * 0.3 : parentWidth * 0.5;
+        final height = _isExpanded ? parentWidth * 0.5 : parentWidth * 0.2;
+
+        return AnimatedContainer(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(_isExpanded ? 50 : 0),
+            color: _isExpanded ? Colors.blue : Colors.red,
           ),
-        ),
-      ),
+          duration: const Duration(seconds: 1),
+          curve: Curves.easeInOut,
+        );
+      },
     );
   }
 }
