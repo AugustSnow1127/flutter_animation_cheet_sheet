@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-class AnimatedContainerBox extends StatefulWidget {
-  final int index;
-
-  const AnimatedContainerBox({super.key, required this.index});
+class AnimatedContainerExample extends StatefulWidget {
+  const AnimatedContainerExample({super.key});
 
   @override
-  AnimatedContainerBoxState createState() => AnimatedContainerBoxState();
+  AnimatedContainerExampleState createState() =>
+      AnimatedContainerExampleState();
 }
 
-class AnimatedContainerBoxState extends State<AnimatedContainerBox> {
+class AnimatedContainerExampleState extends State<AnimatedContainerExample> {
   bool _isExpanded = false;
   late Timer _timer;
 

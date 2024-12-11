@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-class AnimatedAlignBox extends StatefulWidget {
-  final int index;
-
-  const AnimatedAlignBox({super.key, required this.index});
+class AnimatedAlignExample extends StatefulWidget {
+  const AnimatedAlignExample({super.key});
 
   @override
-  AnimatedAlignBoxState createState() => AnimatedAlignBoxState();
+  AnimatedAlignExampleState createState() => AnimatedAlignExampleState();
 }
 
-class AnimatedAlignBoxState extends State<AnimatedAlignBox> {
+class AnimatedAlignExampleState extends State<AnimatedAlignExample> {
   bool _isAlignedLeft = true;
   late Timer _timer;
 
@@ -18,7 +16,7 @@ class AnimatedAlignBoxState extends State<AnimatedAlignBox> {
   void initState() {
     super.initState();
 
-    _timer = Timer.periodic(const Duration(milliseconds: 1500), (timer) {
+    _timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
       setState(() {
         _isAlignedLeft = !_isAlignedLeft;
       });
